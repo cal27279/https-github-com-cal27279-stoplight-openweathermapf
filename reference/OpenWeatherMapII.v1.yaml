@@ -44,12 +44,12 @@ paths:
             type: string
           in: query
           name: q
-          description: '**City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter — just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it’s treated as 3 API calls.*'
+          description: '**City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.'
         - schema:
             type: string
           in: query
           name: id
-          description: 'description: **City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter — just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it’s treated as 3 API calls.*'
+          description: '**City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter — just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have city IDs, it’s treated as 3 API calls.*'
         - schema:
             type: string
           in: query
@@ -57,21 +57,20 @@ paths:
           description: '**Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`.'
         - schema:
             type: string
+          in: query
+          name: lon
+          description: '**Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat `.'
+        - schema:
+            type: string
             default: en
           in: query
           name: lang
-          description: |
-            **Language**. *Example: en*. You can use lang parameter to get the output in your language. We support the following languages that you can use with the corresponded lang values: Arabic - `ar`, Bulgarian - `bg`, Catalan - `ca`, Czech - `cz`, German - `de`, Greek - `el`, English - `en`, Persian (Farsi) - `fa`, Finnish - `fi`, French - `fr`, Galician - `gl`, Croatian - `hr`, Hungarian - `hu`, Italian - `it`, Japanese - `ja`, Korean - `kr`, Latvian - `la`, Lithuanian - `lt`, Macedonian - `mk`, Dutch - `nl`, Polish - `pl`, Portuguese - `pt`, Romanian - `ro`, Russian - `ru`, Swedish - `se`, Slovak - `sk`, Slovenian - `sl`, Spanish - `es`, Turkish - `tr`, Ukrainian - `ua`, Vietnamese - `vi`, Chinese Simplified - `zh_cn`, Chinese Traditional - `zh_tw`.
+          description: '**Language**. *Example: en*. You can use lang parameter to get the output in your language. We support the following languages that you can use with the corresponded lang values: Arabic - `ar`, Bulgarian - `bg`, Catalan - `ca`, Czech - `cz`, German - `de`, Greek - `el`, English - `en`, Persian (Farsi) - `fa`, Finnish - `fi`, French - `fr`, Galician - `gl`, Croatian - `hr`, Hungarian - `hu`, Italian - `it`, Japanese - `ja`, Korean - `kr`, Latvian - `la`, Lithuanian - `lt`, Macedonian - `mk`, Dutch - `nl`, Polish - `pl`, Portuguese - `pt`, Romanian - `ro`, Russian - `ru`, Swedish - `se`, Slovak - `sk`, Slovenian - `sl`, Spanish - `es`, Turkish - `tr`, Ukrainian - `ua`, Vietnamese - `vi`, Chinese Simplified - `zh_cn`, Chinese Traditional - `zh_tw`.'
         - schema:
             type: string
           in: query
           name: mode
-          description: '**Mode**. *Example: html*. Determines the format of the response. Possible values are `json`, `xml`, and `html`. If the mode parameter is empty, the format is `json` by default.'
-        - schema:
-            type: string
-          in: query
-          name: lon
-          description: '**Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat `.'
+          description: '**Mode*. *Example: html. Determines the format of the response. Possible values are `json`, `xml`, and `html`. If the mode parameter is empty, the format is `json` by default.'
       responses:
         '200':
           description: OK
@@ -82,7 +81,6 @@ paths:
                 properties:
                   coord:
                     type: object
-                    description: ''
                     properties:
                       lon:
                         type: number
@@ -90,18 +88,18 @@ paths:
                       lat:
                         type: number
                         description: 'City geo location, latitude'
-                      cod:
-                        type: number
-                        description: Internal parameter
-                      name:
-                        type: string
-                        description: Name
-                      id:
-                        type: number
-                        description: City ID
-                      timezone:
-                        type: number
-                        description: the timezone for the station
+                  cod:
+                    type: number
+                    description: Internal parameter
+                  name:
+                    type: string
+                    description: Name
+                  id:
+                    type: number
+                    description: City ID
+                  timezone:
+                    type: number
+                    description: the timezone for the station
                   sys:
                     type: object
                     properties:
@@ -115,14 +113,14 @@ paths:
                         type: string
                         description: '‘Country code (GB, JP etc.)’'
                       sunrise:
-                        type: string
-                        description: ' ‘Sunrise time, unix, UTC’'
+                        type: number
+                        description: '‘Sunrise time, unix, UTC’'
                       sunset:
                         type: number
                         description: '‘Sunset time, unix, UTC’'
-                      dt:
-                        type: number
-                        description: '‘Time of data calculation, unix, UTC’'
+                  dt:
+                    type: number
+                    description: '‘Time of data calculation, unix, UTC’'
                   clouds:
                     type: object
                     properties:
@@ -138,11 +136,12 @@ paths:
                       deg:
                         type: number
                         description: '‘Wind direction, degrees (meteorological)’'
-                      visibility:
-                        type: number
-                        description: '‘Visibility, meter’'
+                  visibility:
+                    type: number
+                    description: '‘Visibility, meter’'
                   main:
                     type: object
+                    description: ''
                     properties:
                       temp:
                         type: number
@@ -161,10 +160,10 @@ paths:
                         description: '‘Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa’'
                       humidity:
                         type: number
-                        description: ' ‘Humidity, %’'
-                      base:
-                        type: string
-                        description: ' Internal parameter'
+                        description: '‘Humidity, %’'
+                  base:
+                    type: string
+                    description: Internal parameter
                   weather:
                     type: array
                     items:
@@ -183,79 +182,41 @@ paths:
                           type: string
                           description: Weather icon id
               examples:
-                example-1:
-                  value:
-                    '': string
-                example-2:
+                example:
                   value:
                     coord:
                       lon: 145.77
                       lat: -16.92
-                      cod: 200
-                      name: Cairns
-                      id: 2172797
-                      timezone: -28800
+                    cod: 200
+                    name: Cairns
+                    id: 2172797
+                    timezone: -28800
                     sys:
-                      type: 8166
-                      id: 0
+                      type: 1
+                      id: 8166
                       country: AU
                       sunrise: 1435610796
                       sunset: 1435650870
-                      dt: 1435658272
+                    dt: 1435658272
                     clouds:
                       all: 75
                     wind:
                       speed: 5.1
                       deg: 150
-                      visibility: 16093
+                    visibility: 16093
                     main:
                       temp: 293.25
-                      feels_like: 41.6
+                      feels_like: 41.16
                       temp_min: 289.82
                       temp_max: 295.37
                       pressure: 1019
                       humidity: 83
-                      base: cmc stations
+                    base: cmc stations
                     weather:
-                      - id: 803
+                      - id: 0
                         main: clouds
                         description: broken clouds
                         icon: 04n
-                example-3:
-                  value:
-                    coord:
-                      lon: 0
-                      lat: 0
-                      cod: 0
-                      name: string
-                      id: 0
-                      timezone: 0
-                    sys:
-                      type: 0
-                      id: 0
-                      country: string
-                      sunrise: string
-                      sunset: 0
-                      dt: 0
-                    clouds:
-                      all: 0
-                    wind:
-                      speed: 0
-                      deg: 0
-                      visibility: 0
-                    main:
-                      temp: 0
-                      feels_like: 0
-                      temp_min: 0
-                      temp_max: 0
-                      pressure: 0
-                      humidity: 0
-                      base: string
-                    weather:
-                      - id: 0
-                        main: string
-                        description: string
-                        icon: string
             application/xml:
               schema:
                 type: object
@@ -355,12 +316,35 @@ paths:
                     type:
                       - string
                       - object
+            text/html:
+              schema:
+                type: object
+                properties: {}
+            text/plain:
+              schema:
+                type: object
+                properties: {}
+            application/EDI-X12:
+              schema:
+                type: object
+                properties: {}
+          headers: {}
         '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/unauthorized_response'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
 components:
   schemas:
     unauthorized_response:
@@ -375,6 +359,10 @@ components:
       required:
         - cod
         - message
+      x-examples:
+        example-1:
+          cod: 0
+          message: string
   securitySchemes:
     app_id:
       name: appid
