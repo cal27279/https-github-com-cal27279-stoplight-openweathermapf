@@ -70,7 +70,7 @@ paths:
             type: string
           in: query
           name: mode
-          description: '**Mode*. *Example: html. Determines the format of the response. Possible values are `json`, `xml`, and `html`. If the mode parameter is empty, the format is `json` by default.'
+          description: '**Mode**. *Example: html. Determines the format of the response. Possible values are `json`, `xml`, and `html`. If the mode parameter is empty, the format is `json` by default.'
       responses:
         '200':
           description: OK
